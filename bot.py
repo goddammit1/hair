@@ -9,7 +9,6 @@ bot = telebot.TeleBot(TOKEN)
 
 # Читаем данные из JSON-файла
 hairstyles_data = read_json('hair.json')
-print(hairstyles_data)
 
 # Функция для получения списка доступных вариантов для параметра
 def get_options(param, current_selection=None):
