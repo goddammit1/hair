@@ -1,7 +1,7 @@
 import telebot
 from telebot import types
 from config import TOKEN  # Импортируем токен из config.py
-from image_handler import get_image_path, send_image
+from image_handler import get_image_paths, send_image  # Обновили get_image_path на get_image_paths
 from jsonreader import read_json
 
 # Инициализируем бота
@@ -15,10 +15,10 @@ print(hairstyles_data)
 def get_options(param, current_selection=None):
     if param == 'face_type':
         return list(hairstyles_data.keys())
-    elif param == 'hair_type' and current_selection and 'face' in current_selection:  # Изменено на 'face'
-        face_type = current_selection['face']  # Используем 'face'
+    elif param == 'hair_type' and current_selection and 'face' in current_selection:
+        face_type = current_selection['face']
         print(f"Attempting to access hairstyles_data['{face_type}']")
-        return list(hairstyles_data[current_selection['face']].keys())  # Используем 'face'
+        return list(hairstyles_data[current_selection['face']].keys())
     elif param == 'hair_color' and current_selection and 'hair_type' in current_selection:
         return list(hairstyles_data[current_selection['face']][current_selection['hair_type']].keys())
     elif param == 'hair_length' and current_selection and 'hair_color' in current_selection:
@@ -88,7 +88,6 @@ def callback_query(call):
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, 
                                  text="Ошибка: цвета волос не найдены!")
             return
-        # Добавляем шаг для выбора цвета волос
         keyboard = create_keyboard(hair_colors, 'hair_color')
         bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, 
                              text="Выберите цвет волос:", reply_markup=keyboard)
@@ -104,15 +103,15 @@ def callback_query(call):
                              text="Выберите длину волос:", reply_markup=keyboard)
     
     elif param_type == 'hair_length':
-        # Все параметры выбраны, отправляем изображение
+        # Все параметры выбраны, отправляем изображения
         face_type = selection['face']
         hair_type = selection['hair_type']
         hair_color = selection['hair_color']
         hair_length = selected_value
         
-        image_path = get_image_path(hairstyles_data, face_type, hair_type, hair_color, hair_length)
-        if image_path:
-            send_image(bot, call.message.chat.id, image_path)
+        image_paths = get_image_paths(hairstyles_data, face_type, hair_type, hair_color, hair_length)
+        if image_paths:
+            send_image(bot, call.message.chat.id, image_paths)
             bot.delete_message(call.message.chat.id, call.message.message_id)
         else:
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, 
