@@ -1,0 +1,16 @@
+{
+    "oval": {
+        "straight": {
+            "brown": {
+                "short": "images/imba.png",
+                "medium": "images/imba.png",
+                "long": "images/imba.png"
+            },
+            "blonde": {
+                "short": "images/imba.png",
+                "medium": "images/imba.png",
+                "long": "images/imba.png"
+            }
+        }
+    }
+}
