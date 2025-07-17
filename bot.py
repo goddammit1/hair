@@ -4,6 +4,7 @@ from config import TOKEN
 from image_handler import get_image_paths, send_image
 from jsonreader import read_json
 from constants import param_types, next_param, step_data, param_dependencies
+from logger_setup import logger 
 
 # Инициализируем бота
 bot = telebot.TeleBot(TOKEN)
@@ -66,7 +67,7 @@ def callback_query(call):
         return
     
     selection[param_type] = selected_value
-    print(f"Текущее состояние для chat {chat_id}: {selection}")
+    logger.info(f"Текущее состояние для chat {chat_id}: {selection}")  
     
     next_param_type = next_param.get(param_type)
     if next_param_type:
@@ -96,4 +97,4 @@ if __name__ == '__main__':
     try:
         bot.polling(none_stop=True)
     except Exception as e:
-        print(f"Ошибка при запуске бота: {e}")
+        logger.error(f"Ошибка при запуске бота: {e}")  

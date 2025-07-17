@@ -1,9 +1,5 @@
 import json
-import logging
-
-# Настраиваем логирование
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+from logger_setup import logger 
 
 def read_json(file_path):
     """

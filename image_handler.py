@@ -1,8 +1,4 @@
-import logging
-
-# Настраиваем логирование
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+from logger_setup import logger 
 
 def get_image_paths(data, face_type, hair_type, hair_color, hair_length):
     """
