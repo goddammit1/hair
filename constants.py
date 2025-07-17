@@ -1,5 +1,6 @@
 # Определяем параметры и их зависимости
 param_types = ['face', 'hair_length', 'hair_type', 'hair_color']
+
 next_param = {
     'face': 'hair_length',
     'hair_length': 'hair_type',
