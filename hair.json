@@ -1,15 +1,181 @@
 {
-    "oval": {
-        "straight": {
-            "brown": {
-                "short": "images/imba.png",
-                "medium": "images/imba.png",
-                "long": "images/imba.png"
+    "овальная (oval)": {
+        "короткие (short)": {
+            "прямые (straight)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
             },
-            "blonde": {
-                "short": "images/imba.png",
-                "medium": "images/imba.png",
-                "long": "images/imba.png"
+            "волнистые(wavy)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            },
+            "кудрявые(curly)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            }
+        },
+        "длинные (long)": {
+            "прямые (straight)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            },
+            "волнистые(wavy)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            },
+            "кудрявые(curly)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            }
+        }
+    },
+    "круглая (round)": {
+        "короткие (short)": {
+            "прямые (straight)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            },
+            "волнистые(wavy)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            },
+            "кудрявые(curly)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            }
+        },
+        "длинные (long)": {
+            "прямые (straight)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            },
+            "волнистые(wavy)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            },
+            "кудрявые(curly)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            }
+        }
+    },
+    "прямоугольная (rectangle)": {
+        "короткие (short)": {
+            "прямые (straight)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            },
+            "волнистые(wavy)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            },
+            "кудрявые(curly)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            }
+        },
+        "длинные (long)": {
+            "прямые (straight)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            },
+            "волнистые(wavy)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            },
+            "кудрявые(curly)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            }
+        }
+    },
+    "квадратная (square)": {
+        "короткие (short)": {
+            "прямые (straight)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            },
+            "волнистые(wavy)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            },
+            "кудрявые(curly)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            }
+        },
+        "длинные (long)": {
+            "прямые (straight)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            },
+            "волнистые(wavy)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            },
+            "кудрявые(curly)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            }
+        }
+    },
+    "треугольная (triangle)": {
+        "короткие (short)": {
+            "прямые (straight)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            },
+            "волнистые(wavy)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            },
+            "кудрявые(curly)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            }
+        },
+        "длинные (long)": {
+            "прямые (straight)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            },
+            "волнистые(wavy)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            },
+            "кудрявые(curly)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            }
+        }
+    },
+    "ромбовидная (diamond)": {
+        "короткие (short)": {
+            "прямые (straight)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            },
+            "волнистые(wavy)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            },
+            "кудрявые(curly)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            }
+        },
+        "длинные (long)": {
+            "прямые (straight)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            },
+            "волнистые(wavy)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
+            },
+            "кудрявые(curly)": {
+                "тёмные (dark)" : "images/imba.png",
+                "светлые (bright)": "images/imba.png"
             }
         }
     }
