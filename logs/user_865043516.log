@@ -1,0 +1,21 @@
+2025-07-20 19:11:27,963 - INFO - Состояние chat 865043516: {'face': 'овальная (oval)'}
+2025-07-20 19:11:32,679 - INFO - Состояние chat 865043516: {'face': 'овальная (oval)', 'hair_length': 'length_длинные (long)'}
+2025-07-20 19:16:27,974 - INFO - Состояние chat 865043516: {'face': 'прямоугольная (rectangle)'}
+2025-07-20 19:16:29,623 - INFO - Состояние chat 865043516: {'face': 'прямоугольная (rectangle)', 'hair_length': 'length_короткие (short)'}
+2025-07-20 19:17:00,040 - INFO - Состояние chat 865043516: {'face': 'квадратная (square)'}
+2025-07-20 19:17:01,778 - INFO - Состояние chat 865043516: {'face': 'квадратная (square)', 'hair_length': 'length_короткие (short)'}
+2025-07-20 19:24:52,899 - INFO - Состояние chat 865043516: {'face': 'овальная (oval)'}
+2025-07-20 19:24:55,136 - INFO - Состояние chat 865043516: {'face': 'овальная (oval)', 'hair_length': 'length_короткие (short)'}
+2025-07-20 19:32:18,604 - INFO - Состояние chat 865043516: {'hair_length': 'короткие (short)', 'face': 'прямоугольная (rectangle)'}
+2025-07-20 19:32:20,967 - INFO - Состояние chat 865043516: {'hair_length': 'короткие (short)', 'face': 'прямоугольная (rectangle)'}
+2025-07-20 19:32:23,306 - INFO - Состояние chat 865043516: {'hair_length': 'короткие (short)', 'face': 'прямоугольная (rectangle)', 'hair_type': 'type_волнистые(wavy)'}
+2025-07-20 19:34:14,142 - INFO - Состояние chat 865043516: {'hair_type': 'прямые (straight)', 'face': 'прямоугольная (rectangle)'}
+2025-07-20 19:34:15,831 - INFO - Состояние chat 865043516: {'hair_type': 'прямые (straight)', 'face': 'прямоугольная (rectangle)', 'hair_length': 'length_короткие (short)'}
+2025-07-20 19:38:46,387 - INFO - Состояние chat 865043516: {'face': 'прямоугольная (rectangle)'}
+2025-07-20 19:38:47,947 - INFO - Состояние chat 865043516: {'face': 'прямоугольная (rectangle)', 'hair_length': 'короткие (short)'}
+2025-07-20 19:38:49,346 - INFO - Состояние chat 865043516: {'face': 'прямоугольная (rectangle)', 'hair_length': 'короткие (short)', 'hair_type': 'волнистые(wavy)'}
+2025-07-20 19:38:50,679 - INFO - Состояние chat 865043516: {'face': 'прямоугольная (rectangle)', 'hair_length': 'короткие (short)', 'hair_type': 'волнистые(wavy)', 'hair_color': 'светлые (bright)'}
+2025-07-20 19:39:00,086 - INFO - Состояние chat 865043516: {'face': 'прямоугольная (rectangle)'}
+2025-07-20 19:39:01,218 - INFO - Состояние chat 865043516: {'face': 'прямоугольная (rectangle)', 'hair_length': 'длинные (long)'}
+2025-07-20 19:39:02,461 - INFO - Состояние chat 865043516: {'face': 'прямоугольная (rectangle)', 'hair_length': 'длинные (long)', 'hair_type': 'прямые (straight)'}
+2025-07-20 19:39:03,627 - INFO - Состояние chat 865043516: {'face': 'прямоугольная (rectangle)', 'hair_length': 'длинные (long)', 'hair_type': 'прямые (straight)', 'hair_color': 'тёмные (dark)'}

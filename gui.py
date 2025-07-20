@@ -1,16 +1,14 @@
-import tkinter as tk
-from tkinter import scrolledtext, messagebox
+import sys
 import queue
 import logging
+from PyQt6.QtWidgets import (
+    QApplication, QMainWindow, QPushButton, QTextEdit, QLabel, QMessageBox
+)
+from PyQt6.QtGui import QPixmap, QFont, QResizeEvent, QCloseEvent, QMouseEvent
+from PyQt6.QtCore import QTimer, Qt, QPoint
 from bot_logic import HairBot
-from logger_setup import logger
-import customtkinter as ctk
-from PIL import Image, ImageDraw
+from logger_setup import setup_logger
 import ctypes
-import pywinstyles
-
-ctk.set_appearance_mode("dark")  # Dark mode
-ctk.set_default_color_theme("dark-blue")  # Blue accent theme
 
 class QueueHandler(logging.Handler):
     """Обработчик логов, записывающий сообщения в очередь."""
@@ -25,130 +23,181 @@ class QueueHandler(logging.Handler):
         except Exception:
             self.handleError(record)
 
-class BotGUI(ctk.CTk):
+class BotGUI(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.geometry("960x540")
-        self.minsize(480, 270)  # Устанавливаем минимальный размер
-        self.configure(fg_color="#000000")
+        self.setWindowTitle("HairBot GUI")
+        self.setGeometry(100, 100, 960, 540)
+        self.setMinimumSize(480, 270)
+        self.setStyleSheet("background-color: #000000;")
 
-        # Загрузка пользовательского фонового изображения
-        self.bg_pil_image = Image.open("assets/Group_5.jpg")
-        self.bg_ctk_image = ctk.CTkImage(self.bg_pil_image, size=(960, 540))
-        self.bg_label = ctk.CTkLabel(self, text="", image=self.bg_ctk_image)
-        self.bg_label.place(relx=0, rely=0, relwidth=1, relheight=1)
-        self.bg_label.lower()
+        # Фоновое изображение
+        self.bg_label = QLabel(self)
+        self.bg_label.setGeometry(0, 0, 960, 540)
+        self.bg_label.setScaledContents(True)
+        self.load_background_image()
 
-        
-        self.log_font = ctk.CTkFont(family="IBM Plex Sans Thai Looped", size=11)
+        # Шрифт
+        self.log_font = QFont("IBM Plex Sans Thai Looped", 9)
 
-        # Start and Stop buttons (bottom area)
-        self.start_button = ctk.CTkButton(
-            self,
-            text="Start Bot",
-            fg_color="black",
-            hover_color="gray",
-            text_color="white",
-            font=self.log_font,
-            command=self.start_bot
-        )
-        self.start_button.place(relx=0.25, rely=0.92, anchor="center")
+        button_style = """
+        QPushButton {
+            background-color: black;
+            color: white;
+            border: none;
+            outline: none;
+        }
+        QPushButton:hover {
+            background-color: gray;
+        }
+        QPushButton:focus {
+            outline: none;
+        }
+        """
 
-        self.stop_button = ctk.CTkButton(
-            self,
-            text="Stop Bot",
-            fg_color="black",
-            hover_color="gray",
-            text_color="white",
-            font=self.log_font,
-            command=self.stop_bot
-        )
-        self.stop_button.place(relx=0.75, rely=0.92, anchor="center")
-        self.stop_button.configure(state="disabled")
+        self.start_button = QPushButton("Start Bot", self)
+        self.start_button.setGeometry(240, 500, 100, 30)
+        self.start_button.setStyleSheet(button_style)
+        self.start_button.setFont(self.log_font)
+        self.start_button.clicked.connect(self.start_bot)
 
-        self.textbox = ctk.CTkTextbox(
-            self, corner_radius=10,
-            fg_color="transparent", text_color="white",
-            border_width=1, border_color="#333333",
-            font=self.log_font
-        )
-        self.textbox.place(relx=0.5, rely=0.5, anchor="center", relwidth=0.56, relheight=0.6)
-        self.textbox.configure(state="disabled")
-        pywinstyles.set_opacity(self.textbox, value=0.9)
+        self.stop_button = QPushButton("Stop Bot", self)
+        self.stop_button.setGeometry(720, 500, 100, 30)
+        self.stop_button.setStyleSheet(button_style)
+        self.stop_button.setFont(self.log_font)
+        self.stop_button.clicked.connect(self.stop_bot)
+        self.stop_button.setEnabled(False)
+
+        # Текстовое поле для логов
+        self.textbox = QTextEdit(self)
+        self.textbox.setGeometry(240, 135, 480, 270)
+        self.textbox.setStyleSheet("""
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: 1px solid #333333;
+            border-radius: 30px;
+            padding-left: 20px;    /* отступ слева */
+            padding-top: 8px;      /* отступ сверху, по желанию */
+            padding-right: 8px;    /* отступ справа */
+            padding-bottom: 8px;   /* отступ снизу */
+        """)
+        self.textbox.setFont(self.log_font)
+        self.textbox.setReadOnly(True)
 
         # Очередь для логов и её обработчик
         self.log_queue = queue.Queue()
         formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
         self.queue_handler = QueueHandler(self.log_queue)
         self.queue_handler.setFormatter(formatter)
-        logger.addHandler(self.queue_handler)
+
+        # Настраиваем глобальный логгер, передавая очередь
+        self.logger = setup_logger(self.log_queue)  # Передаем очередь в setup_logger
 
         # Модель бота
-        self.bot_logic = HairBot()
+        self.bot_logic = HairBot(self.log_queue)
 
-        # Запуск обновления лога каждые 100 мс
-        self.after(100, self.update_logs)
-        self.protocol("WM_DELETE_WINDOW", self.on_closing)
+        # Timer для обновления логов
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.update_logs)
+        self.timer.start(100)
 
-        #Уебан открыл окно на весь экран
-        self.bind("<Configure>", self.on_resize)
+        # Перетаскивание окна
+        self._drag_start_pos = None
 
-    def on_resize(self, event):
-        new_width = self.winfo_width()
-        new_height = self.winfo_height()
+    def load_background_image(self):
+        pixmap = QPixmap("assets/Group_5.jpg")
+        self.bg_label.setPixmap(pixmap)
+
+    def resizeEvent(self, event: QResizeEvent):
         # Обновляем фоновое изображение
-        self.bg_ctk_image = ctk.CTkImage(self.bg_pil_image, size=(new_width, new_height))
-        self.bg_label.configure(image=self.bg_ctk_image)
+        self.bg_label.setGeometry(0, 0, self.width(), self.height())
+    
+        # Вычисляем коэффициент масштабирования
+        scaling_factor = self.height() / 540
+    
         # Обновляем размер шрифта
-        new_font_size = int(11 * (new_height / 540))
-        self.log_font.configure(size=new_font_size)
-
-    def start_move(self, event):
-        """Record starting mouse position for dragging."""
-        self._drag_start_x = event.x
-        self._drag_start_y = event.y
-
+        new_font_size = int(9 * scaling_factor)
+        self.log_font.setPointSize(new_font_size)
+        self.start_button.setFont(self.log_font)
+        self.stop_button.setFont(self.log_font)
+        self.textbox.setFont(self.log_font)
+        
+        # Масштабируем размеры кнопок
+        w = int(100 * scaling_factor)  # Новая ширина
+        h = int(30 * scaling_factor)   # Новая высота
+        
+        # Вычисляем позиции кнопок
+        x_start = int(self.width() * 0.25 - w / 2)
+        x_stop = int(self.width() * 0.75 - w / 2)
+        y = int(self.height() * 0.92)
+        
+        # Обновляем геометрию кнопок
+        self.start_button.setGeometry(x_start, y, w, h)
+        self.stop_button.setGeometry(x_stop, y, w, h)
+        
+        # Обновляем геометрию текстового поля
+        self.textbox.setGeometry(int(self.width() * 0.25), int(self.height() * 0.25), int(self.width() * 0.5), int(self.height() * 0.5))
 
     def start_bot(self):
         if self.bot_logic.thread and self.bot_logic.thread.is_alive():
             return
-        logger.info("Запуск бота...")
+        self.logger.info("Запуск бота...")
         self.bot_logic.start()
-        self.start_button.configure(state="disabled")
-        self.stop_button.configure(state="normal")
+        self.start_button.setEnabled(False)
+        self.stop_button.setEnabled(True)
 
     def stop_bot(self):
-        logger.info("Остановка бота...")
+        self.logger.info("Остановка бота...")
         self.bot_logic.stop()
-        self.start_button.configure(state="normal")
-        self.stop_button.configure(state="disabled")
+        self.start_button.setEnabled(True)
+        self.stop_button.setEnabled(False)
 
     def update_logs(self):
         while not self.log_queue.empty():
             message = self.log_queue.get()
-            self.textbox.configure(state="normal")
-            self.textbox.insert(tk.END, message + '\n')
-            self.textbox.see(tk.END)
-            self.textbox.configure(state="disabled")
-        self.after(100, self.update_logs)
+            self.textbox.append(message)
+            self.textbox.ensureCursorVisible()
+        # Проверка состояния потока бота
+        if self.bot_logic.thread and not self.bot_logic.thread.is_alive() and self.stop_button.isEnabled():
+            self.start_button.setEnabled(True)
+            self.stop_button.setEnabled(False)
+            self.logger.info("Бот неожиданно завершился.")
 
-    def on_closing(self):
+    def closeEvent(self, event: QCloseEvent):
         if self.bot_logic.thread and self.bot_logic.thread.is_alive():
-            confirm = messagebox.askyesno(
-                "Подтверждение закрытия",
-                "Бот все еще работает! Вы уверены, что хотите выйти?",
-                icon='warning'
-            )
-            if not confirm:
+            msgBox = QMessageBox(self)
+            msgBox.setWindowTitle("Подтверждение закрытия")
+            msgBox.setText("Бот всё ещё работает! Вы уверены, что хотите выйти?")
+            msgBox.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+            msgBox.setDefaultButton(QMessageBox.StandardButton.No)
+            msgBox.setStyleSheet("color: white; background-color: black;")
+            reply = msgBox.exec()
+            if reply == QMessageBox.StandardButton.No:
+                event.ignore()
                 return
-            logger.info("Останавливаем бота...")
+            self.logger.info("Останавливаем бота...")
             self.bot_logic.stop()
             self.bot_logic.thread.join(timeout=3.0)
             if self.bot_logic.thread.is_alive():
-                logger.warning("Поток не завершился вовремя!")
-        logger.info("Приложение закрыто")
-        self.destroy()
+                self.logger.warning("Поток не завершился вовремя!")
+        self.logger.info("Приложение закрыто")
+        event.accept()
+
+    def mousePressEvent(self, event: QMouseEvent):
+        if event.button() == Qt.MouseButton.LeftButton:
+            self._drag_start_pos = event.globalPosition().toPoint() - self.frameGeometry().topLeft()
+
+    def mouseMoveEvent(self, event: QMouseEvent):
+        if event.buttons() == Qt.MouseButton.LeftButton and self._drag_start_pos is not None:
+            self.move(event.globalPosition().toPoint() - self._drag_start_pos)
+
+    def mouseReleaseEvent(self, event: QMouseEvent):
+        if event.button() == Qt.MouseButton.LeftButton:
+            self._drag_start_pos = None
 
 if __name__ == "__main__":
-    app = BotGUI()
-    app.mainloop()
+    app = QApplication(sys.argv)
+    app.setStyle("Fusion")  # Темная тема
+    window = BotGUI()
+    window.show()
+    sys.exit(app.exec())
